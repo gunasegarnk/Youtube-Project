@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Video</title>
+    <link rel="stylesheet" href="HOME.CSS">
+
+
+</head>
+
+<body>
+    <nav class="flex-div">
+        <script src="./common/header.js"></script>
+    </nav>
+
+    <div class="container play-container">
+        <div class="row">
+            <div class="play-video">
+                <div id="videoContainer">
+
+                </div>
+                <div class="videoInfo">
+                    
+                </div>
+                
+            </div>
+            <!-- <div class="comments">
+                <div class="add-comment">
+                    <img src="images/Jack.png">
+                    <input type="text" placeholder="write Comments">
+                </div>
+
+                <div class="old-comment">
+                    <img src="images/Jack.png">
+                    <div>
+                        <h3>Jack <span>2 days ago</span></h3>
+                        <p>These Video is awesome</p>
+                        <div class="comment-action">
+                            <img src="images/like.png">
+                            <span>20K</span>
+                            <img src="images/dislike.png">
+                            <span>100</span>
+                            <span>Reply</span>
+                            <a href="">All Replies</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="old-comment">
+                    <img src="images/Jack.png">
+                    <div>
+                        <h3>Jack <span>2 days ago</span></h3>
+                        <p>These Video is awesome</p>
+                        <div class="comment-action">
+                            <img src="images/like.png">
+                            <span>20K</span>
+                            <img src="images/dislike.png">
+                            <span>100</span>
+                            <span>Reply</span>
+                            <a href="">All Replies</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-sidebar">
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail1.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail2.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail3.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail4.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail5.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail6.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail7.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail8.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+                <div class="side-video-list">
+                    <a href="" class="small-thumbnail"><img src="images/thumbnail1.png"></a>
+                    <div class="vid-info">
+                        <a href="">this is my 2nd video</a>
+                        <p>A&A</p>
+                        <p>60k views in 1 days</p>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div> -->
+        </div>
+    </div>
+    <script>
+        const urlString = window.location.href;
+        const videoId = urlString.split("=")[1];
+        const videoElement = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+        document.getElementById("videoContainer").innerHTML = videoElement;
+
+        const API_KEY = 'AIzaSyBb6IGMRDG3bLPKS7gmWfse21iIVRp8PMk';
+        const videoURL = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`;
+        const getVideoContent = async () => {
+            const fetchData = await fetch(videoURL);
+            const videoData = await fetchData.json();
+            displayVideoData(videoData.items);
+
+        }
+        const displayVideoData = (items) => {
+            console.log(items, "items");
+            items.forEach(({id,snippet,statistics})=>{
+                const element = `<div class="tags">
+                        <a href="">#coding</a>
+                        <a href="">#HTML</a>
+                        <a href="">#CSS</a>
+                        <a href="">#JAVASCRIPT</a>
+                    </div>
+                    <h3>${snippet.title}</h3>
+                    <div class="play-video-info">
+                        <p>${statistics.viewCount} views &bull; 1 days ago</p>
+                        <div>
+                            <a href=""><img src="images/like.png">${statistics.likeCount}</a>
+                            <a href=""><img src="images/dislike.png">2</a>
+                            <a href=""><img src="images/share.png">Share</a>
+                            <a href=""><img src="images/save.png">Save</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="publisher">
+                        <img src="images/Jack.png">
+                        <div>
+                            <p>LM10</p>
+                            <span>7M Subscribers</span>
+                        </div>
+                        <button type="button">
+                            Subscribe
+                        </button>
+                    </div>
+    
+                    <div class="vid-description">
+                        <p>${snippet.description}</p>
+                        <hr>
+                        <h4>${statistics.commentCount} Comments</h4>
+                    </div>`;
+                    document.getElementsByClassName('videoInfo')[0].innerHTML += element;
+            })
+        }
+        getVideoContent();
+
+
+
+    </Script>
+
+</body>
+
+</html>
